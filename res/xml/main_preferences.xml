@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+            android:title="Download and share options">
+
+        <EditTextPreference
+                android:key="default_email"
+                android:title="Default email"
+                android:summary="Pictures will be sent here if provided"
+                android:dialogTitle="Default email" />
+  
+          <ListPreference
+                android:key="sizes_list_preference"
+                android:title="Select a size"
+                android:summary=""
+                android:entries="@array/entries_sizeslist_preference"
+                android:entryValues="@array/entryvalues_sizeslist_preference"
+                android:dialogTitle="Select a size" />
+  
+  </PreferenceCategory>
+  
+  <PreferenceCategory android:title="Cache options">      
+  		<CheckBoxPreference
+  			android:key="cache_order_desc" 
+  			android:title="Latest comes first"
+  			android:summary="Order images descending in time" 
+  			android:defaultValue="true"
+  			/>
+      		
+  </PreferenceCategory>  
+    
+  <PreferenceCategory android:title="Preview options">      
+          <ListPreference
+                android:key="sizes_preview_preference"
+                android:title="Select a size"
+                android:summary="Smaller the size, faster the preview"
+                android:entries="@array/entries_previewsizeslist_preference"
+                android:entryValues="@array/entryvalues_previewsizeslist_preference"
+                android:dialogTitle="Select a size" />
+  </PreferenceCategory>  
+    
+  <PreferenceCategory
+  				android:title="Listing options">
+  
+  		<CheckBoxPreference
+  			android:key="show_non_canon" 
+  			android:title="Show non-Canon devices"
+  			android:summary="Show other DLNA capable devices. Browsing is supported only for Canon cameras."/>
+  				
+  		<CheckBoxPreference
+  			android:key="browse_non_canon" 
+  			android:title="Browse non-Canon devices"
+  			android:summary="Browse other DLNA capable devices. EXPERIMENTAL!"/>
+  				
+  </PreferenceCategory>
+
+  <PreferenceCategory android:title="Alert options">
+  
+  		<CheckBoxPreference
+  			android:key="alert_on_new_device" 
+  			android:title="Alert on new device"
+  			android:summary="Show alert in the notification bar when a camera is in range"/>
+  			
+  		<CheckBoxPreference
+  			android:key="alert_on_content" 
+  			android:title="Alert on pictures"
+  			android:summary="Show alert in the notification bar when pictures are available for a camera"/>
+  
+  		<CheckBoxPreference
+  			android:key="alert_sound" 
+  			android:title="Alert sound"
+  			android:summary="Play default alert sound on notifications"/>
+  			
+  		<CheckBoxPreference
+  			android:key="alert_vibrate" 
+  			android:title="Alert vibrate"
+  			android:summary="Vibrate on notifications"/>
+  			
+  </PreferenceCategory>
+  
+</PreferenceScreen>

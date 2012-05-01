@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.bikeonet.android.dslrbrowser" android:versionCode="4" android:versionName="0.0.4-SNAPSHOT">
+    <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="10" />
+	<uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+
+  <application android:icon="@drawable/icon" android:label="@string/app_name" android:name="DslrBrowserApplication">
+    <activity android:name=".DeviceListActivity" android:screenOrientation="portrait" android:launchMode="singleTask">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+    
+	<activity android:name="ImageGalleryActivity" android:screenOrientation="landscape" android:launchMode="singleTask"></activity>
+	<activity android:name="CachedImagesGalleryActivity" android:screenOrientation="landscape" android:launchMode="singleTask"></activity>
+	<activity android:name="PreferencesActivity" android:screenOrientation="portrait" />	
+		
+	<!-- service android:name="org.teleal.cling.android.AndroidUpnpServiceImpl"/ -->
+	<service android:name="AndroidContentManagerUpnpServiceImpl" />
+    
+  </application>
+
+</manifest>
+

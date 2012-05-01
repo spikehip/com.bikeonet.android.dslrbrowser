@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Canon DSLR browser</string>
+    <string name="devicenotfound">No device found. Push to search again.</string>
+    <string name="viewcachedcontent">View offline content</string>
+    <string name="local_service_started">local_service_started</string>
+    <string name="connecto">Connect your WFT-E5 to SSID:</string>
+    <string name="search_button_hint">search button</string>
+    <string name="local_cache_hint">view downloaded</string>
+    <string name="device_icon_hint">device type icon</string>
+    <string name="device_name">device name</string>
+</resources>

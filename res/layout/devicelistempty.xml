@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" android:orientation="vertical" android:gravity="center_vertical|center_horizontal" android:id="@+id/empty">
+    <ImageButton android:layout_height="wrap_content" android:id="@+id/emptySearchButton1" android:layout_width="wrap_content" android:src="@android:drawable/ic_menu_search" android:contentDescription="@string/search_button_hint"></ImageButton>
+    <TextView android:id="@+id/emptyText1" android:layout_height="wrap_content" android:text="@string/devicenotfound" android:layout_width="wrap_content"></TextView>
+    <TextView android:id="@+id/emptyText2" android:layout_height="wrap_content" android:text="@string/connecto" android:layout_width="wrap_content"></TextView>
+    <TextView android:id="@+id/emptyText3" android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+	<LinearLayout android:gravity="center_vertical|center_horizontal" android:orientation="vertical" android:id="@+id/emptyShowCacheView" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content">
+	    <ImageButton android:id="@+id/emptyDownloadedImagesButton1" android:layout_height="wrap_content" android:layout_width="wrap_content" android:src="@android:drawable/ic_menu_upload" android:contentDescription="@string/local_cache_hint"></ImageButton>
+	    <TextView android:id="@+id/emptyViewCachedContentText1" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/viewcachedcontent"></TextView>
+	</LinearLayout>    
+</LinearLayout>
