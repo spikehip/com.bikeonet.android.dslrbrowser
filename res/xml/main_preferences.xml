@@ -21,6 +21,20 @@
   
   </PreferenceCategory>
   
+  <PreferenceCategory android:title="EXIF options">
+      <CheckBoxPreference 
+          android:key="exif_insert_gps"
+          android:title="Insert GPS"
+          android:summary="Insert GPS latitude and longitude coordinates to exif data"
+          android:defaultValue="false"
+          />
+      <!-- CheckBoxPreference 
+          android:key="exif_autorotate"
+          android:title="Autorotate"
+          android:summary="Autorotate image based on exif information"
+          android:defaultValue="false"/ -->
+  </PreferenceCategory>
+  
   <PreferenceCategory android:title="Cache options">      
   		<CheckBoxPreference
   			android:key="cache_order_desc" 

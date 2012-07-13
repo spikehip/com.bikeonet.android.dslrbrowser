@@ -3,6 +3,8 @@ package com.bikeonet.android.dslrbrowser;
 import java.io.File;
 import java.io.FilenameFilter;
 
+import com.bikeonet.android.dslrbrowser.ui.CachedImageAdapter;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;

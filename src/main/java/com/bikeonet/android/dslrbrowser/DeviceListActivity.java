@@ -6,6 +6,10 @@ import java.io.FilenameFilter;
 import org.teleal.cling.android.AndroidUpnpService;
 import org.teleal.cling.model.message.header.STAllHeader;
 
+import com.bikeonet.android.dslrbrowser.data.DeviceDisplay;
+import com.bikeonet.android.dslrbrowser.data.EOSImageContent;
+import com.bikeonet.android.dslrbrowser.ui.DeviceAdapter;
+
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -190,6 +194,7 @@ public class DeviceListActivity extends ListActivity {
 			else
 				Toast.makeText(this, "No cached content", Toast.LENGTH_SHORT).show();
 		}
+				
 		return false;
 	}
 

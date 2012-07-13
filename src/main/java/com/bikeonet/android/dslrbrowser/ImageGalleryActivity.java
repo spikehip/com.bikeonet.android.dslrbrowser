@@ -3,6 +3,10 @@ package com.bikeonet.android.dslrbrowser;
 import java.io.File;
 import java.util.List;
 
+import com.bikeonet.android.dslrbrowser.data.EOSImageContent;
+import com.bikeonet.android.dslrbrowser.ui.ImageAdapter;
+import com.bikeonet.android.dslrbrowser.util.DownloadManager;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;

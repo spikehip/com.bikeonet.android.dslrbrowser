@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.bikeonet.android.dslrbrowser" android:versionCode="4" android:versionName="0.0.4-SNAPSHOT">
+  package="com.bikeonet.android.dslrbrowser" android:versionCode="5" android:versionName="0.0.5-SNAPSHOT">
     <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="10" />
+    <!-- Permissions to access the wifi interface for connecting the camera -->
 	<uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    
+    <!-- Permissions to inject GPS coordinates to exif data -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    
+    <!-- Permissions to access external storage for download of images, wake lock for large files and vibration for some notification purposes -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
     <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
     <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
@@ -23,7 +31,7 @@
 	<activity android:name="PreferencesActivity" android:screenOrientation="portrait" />	
 		
 	<!-- service android:name="org.teleal.cling.android.AndroidUpnpServiceImpl"/ -->
-	<service android:name="AndroidContentManagerUpnpServiceImpl" />
+	<service android:name=".upnp.AndroidContentManagerUpnpServiceImpl" />
     
   </application>
 
