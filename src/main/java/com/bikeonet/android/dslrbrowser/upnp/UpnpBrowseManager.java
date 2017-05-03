@@ -15,7 +15,7 @@ import com.bikeonet.android.dslrbrowser.DslrBrowserApplication;
 
 public class UpnpBrowseManager implements Runnable {
 
-	private static final int DEFAULT_RUN_CYCLE_COUNT = 10;
+	private static final int DEFAULT_RUN_CYCLE_COUNT = 100;
 	private static final String TAG = UpnpBrowseManager.class.getName();
 	private static final ServiceId SERVICEID = new UDAServiceId(
 			"ContentDirectory");
