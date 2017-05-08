@@ -1,6 +1,5 @@
 package com.bikeonet.android.dslrbrowser;
 
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -13,17 +12,17 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-
 import com.bikeonet.android.dslrbrowser.content.CameraItem;
+import com.bikeonet.android.dslrbrowser.content.CameraList;
 import com.bikeonet.android.dslrbrowser.content.PhotoItem;
+import com.bikeonet.android.dslrbrowser.content.PhotoList;
 import com.bikeonet.android.dslrbrowser.messaging.LocalBroadcastMessageBuilder;
+import com.bikeonet.android.dslrbrowser.upnp.BrowseManager;
 import com.bikeonet.android.dslrbrowser.upnp.ContentDirectoryRegistryListener;
-
 import org.fourthline.cling.android.AndroidUpnpService;
 import org.fourthline.cling.android.AndroidUpnpServiceImpl;
 import org.fourthline.cling.registry.RegistryListener;
@@ -51,7 +50,9 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
             }
 
             if ( intent.getExtras().containsKey(LocalBroadcastMessageBuilder.PHOTO_LIST_NEW_CONTENT)) {
-                photoListFragment.getViewAdapter().notifyDataSetChanged();
+                if (photoListFragment != null && photoListFragment.getViewAdapter() != null ) {
+                    photoListFragment.getViewAdapter().notifyDataSetChanged();
+                }
             }
 
         }
@@ -131,7 +132,9 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
                 upnpService = (AndroidUpnpService) service;
+                BrowseManager.initializeInstance(upnpService);
                 upnpService.getRegistry().addListener(registryListener);
+                upnpService.getControlPoint().search();
             }
 
             @Override
@@ -149,4 +152,52 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (upnpService != null) {
+            upnpService.getRegistry().removeListener(registryListener);
+        }
+        // This will stop the UPnP service if nobody else is bound to it
+        getApplicationContext().unbindService(serviceConnection);
+    }
+
+    /**
+     * This hook is called whenever an item in your options menu is selected.
+     * The default implementation simply returns false to have the normal
+     * processing happen (calling the item's Runnable or sending a message to
+     * its Handler as appropriate).  You can use this method for any items
+     * for which you would like to do processing without those other
+     * facilities.
+     * <p>
+     * <p>Derived classes should call through to the base class for it to
+     * perform the default menu handling.</p>
+     *
+     * @param item The menu item that was selected.
+     * @return boolean Return false to allow normal menu processing to
+     * proceed, true to consume it here.
+     * @see #onCreateOptionsMenu
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search_upnp:
+                CameraList.reset();
+                PhotoList.ITEMS.clear();
+                if (cameraListFragment.getViewAdapter() != null) {
+                    cameraListFragment.getViewAdapter().notifyDataSetChanged();
+                }
+                if (photoListFragment != null && photoListFragment.getViewAdapter() != null ) {
+                    photoListFragment.getViewAdapter().notifyDataSetChanged();
+                }
+                if (upnpService != null && upnpService.getControlPoint() != null ) {
+                    upnpService.getControlPoint().search();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
 }

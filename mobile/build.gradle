@@ -25,7 +25,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        pickFirst 'META-INF/beans.xml'
+    }
 }
+
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -39,6 +45,7 @@ dependencies {
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'org.fourthline.cling:cling-core:2.1.2-SNAPSHOT'
+    compile 'org.fourthline.cling:cling-support:2.1.2-SNAPSHOT'
     compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '8.1.8.v20121106'
     compile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '8.1.8.v20121106'
     compile group: 'org.eclipse.jetty', name: 'jetty-client', version: '8.1.8.v20121106'

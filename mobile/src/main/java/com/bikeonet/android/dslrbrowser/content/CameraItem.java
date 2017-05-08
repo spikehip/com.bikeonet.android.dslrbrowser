@@ -38,14 +38,18 @@ public class CameraItem {
                         + " " +
                         (remoteDevice.getDetails() != null ? ( remoteDevice.getDetails().getModelDetails() != null ? remoteDevice.getDetails().getModelDetails().getModelName():"") : ""));
 
+        this.remoteDevice = remoteDevice;
         if (loadContents) {
-            this.remoteDevice = remoteDevice;
-            try {
-                smallIcon = downloadSmallIcon();
-                largeIcon = downloadLargeIcon();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            loadIcons();
+        }
+    }
+
+    public void loadIcons() {
+        try {
+            smallIcon = downloadSmallIcon();
+            largeIcon = downloadLargeIcon();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -80,7 +84,6 @@ public class CameraItem {
         CameraItem that = (CameraItem) o;
 
         return id.equals(that.id);
-
     }
 
     @Override
@@ -155,5 +158,9 @@ public class CameraItem {
             return true;
         }
         return false;
+    }
+
+    public String getHost() {
+        return this.remoteDevice.getIdentity().getDescriptorURL().getHost();
     }
 }

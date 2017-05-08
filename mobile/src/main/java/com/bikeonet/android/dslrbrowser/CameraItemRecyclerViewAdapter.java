@@ -44,6 +44,9 @@ public class CameraItemRecyclerViewAdapter extends RecyclerView.Adapter<CameraIt
         if (mValues.get(position).getLargeIcon() != null ) {
             holder.deviceIcon.setImageBitmap(mValues.get(position).getLargeIcon());
         }
+        else {
+            holder.deviceIcon.setImageResource(R.drawable.camera_75);
+        }
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -38,6 +38,10 @@ public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecycler
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         //holder.mIdView.setText(mValues.get(position).id);
+        if (mValues.get(position).getThumbnail() != null ) {
+            holder.mThumbnailView.setImageBitmap(mValues.get(position).getThumbnail());
+        }
+
         holder.mProgressView.setText("0 %");
 
         holder.mView.setOnClickListener(new View.OnClickListener() {

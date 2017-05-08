@@ -1,22 +1,25 @@
 package com.bikeonet.android.dslrbrowser.upnp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-
-import com.bikeonet.android.dslrbrowser.MainActivity;
 import com.bikeonet.android.dslrbrowser.content.CameraItem;
 import com.bikeonet.android.dslrbrowser.content.CameraList;
+import com.bikeonet.android.dslrbrowser.content.PhotoItem;
+import com.bikeonet.android.dslrbrowser.content.PhotoList;
 import com.bikeonet.android.dslrbrowser.messaging.LocalBroadcastMessageBuilder;
-
 import org.fourthline.cling.model.meta.LocalDevice;
 import org.fourthline.cling.model.meta.RemoteDevice;
+import org.fourthline.cling.model.meta.RemoteService;
 import org.fourthline.cling.model.meta.Service;
+import org.fourthline.cling.model.types.ServiceType;
 import org.fourthline.cling.registry.Registry;
 import org.fourthline.cling.registry.RegistryListener;
+import java.util.function.Predicate;
+
+import static org.fourthline.cling.binding.xml.Descriptor.Device.ELEMENT.service;
 
 /**
  * Created by andrasbekesi on 04/05/17.
@@ -77,18 +80,23 @@ public class ContentDirectoryRegistryListener implements RegistryListener {
      */
     @Override
     public void remoteDeviceAdded(Registry registry, RemoteDevice device) {
-
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(mContext);
         boolean showCanonOnly = prefs.getBoolean("show_canon_only", true);
-        CameraItem cameraItem = new CameraItem(device);
-        if ( showCanonOnly && !cameraItem.isCanon() ) {
-            //we are interested only in canon
-        }
-        else {
-            CameraList.ITEMS.add(cameraItem);
-            // Broadcasts the Intent to receivers in this app.
-            LocalBroadcastManager.getInstance(mContext).sendBroadcast(LocalBroadcastMessageBuilder.buildCameraListNewContentMessage());
+        if ( device.isFullyHydrated() ) {
+            CameraItem cameraItem = new CameraItem(device);
+            if (showCanonOnly && !cameraItem.isCanon()) {
+                //we are interested only in canon
+            } else {
+//                int index = CameraList.ITEMS.indexOf(cameraItem);
+//                if (index > -1) {
+//                    CameraList.ITEMS.add(index, cameraItem);
+//                } else {
+                    CameraList.addItem(cameraItem);
+//                }
+
+                LocalBroadcastManager.getInstance(mContext).sendBroadcast(LocalBroadcastMessageBuilder.buildCameraListNewContentMessage());
+            }
         }
     }
 
@@ -105,6 +113,32 @@ public class ContentDirectoryRegistryListener implements RegistryListener {
     @Override
     public void remoteDeviceUpdated(Registry registry, RemoteDevice device) {
         Log.d(this.getClass().getName(),"Android UPNP Service remote device updated " + device.toString());
+        if (device.isFullyHydrated()) {
+            for(RemoteService s : device.getServices()) {
+                Log.d(this.getClass().getName(), s.toString());
+            }
+            CameraItem cameraItem = new CameraItem(device, false);
+            if ( CameraList.contains(cameraItem)) {
+                // Start browsing for images
+                BrowseManager browseManager = BrowseManager.getInstance();
+                browseManager.queueNode(device, "0");
+                Thread browseThread = new Thread(browseManager);
+                browseThread.start();
+            }
+            else {
+                SharedPreferences prefs = PreferenceManager
+                        .getDefaultSharedPreferences(mContext);
+                boolean showCanonOnly = prefs.getBoolean("show_canon_only", true);
+
+                if (showCanonOnly && !cameraItem.isCanon()) {
+                    //we are interested only in canon
+                } else {
+                    cameraItem.loadIcons();
+                    CameraList.addItem(cameraItem);
+                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(LocalBroadcastMessageBuilder.buildCameraListNewContentMessage());
+                }
+            }
+        }
     }
 
     /**
@@ -121,12 +155,20 @@ public class ContentDirectoryRegistryListener implements RegistryListener {
     @Override
     public void remoteDeviceRemoved(Registry registry, RemoteDevice device) {
         Log.d(this.getClass().getName(),"Android UPNP Service remote device removed " + device.toString());
-        CameraItem item = new CameraItem(device, false);
-        if ( CameraList.ITEMS.indexOf(item) > -1 ) {
-            if ( CameraList.ITEMS.remove(item)) {
+        final CameraItem item = new CameraItem(device, false);
+            if ( CameraList.remove(item) ) {
+
+                //noinspection Since15
+                PhotoList.ITEMS.removeIf(new Predicate<PhotoItem>() {
+                    @Override
+                    public boolean test(PhotoItem photoItem) {
+                        return photoItem.getCameraItem().equals(item);
+                    }
+                });
+
                 LocalBroadcastManager.getInstance(mContext).sendBroadcast(LocalBroadcastMessageBuilder.buildCameraListNewContentMessage());
+                LocalBroadcastManager.getInstance(mContext).sendBroadcast(LocalBroadcastMessageBuilder.buildPhotoListNewContentMessage());
             }
-        }
     }
 
     /**

@@ -15,4 +15,6 @@
     <string name="insert_gps_desc">Inject geolocation information</string>
     <string name="download_to_album">Download to album</string>
     <string name="download_to_album_desc">Download to a separated album</string>
+
+    <string name="title_search">Search</string>
 </resources>
