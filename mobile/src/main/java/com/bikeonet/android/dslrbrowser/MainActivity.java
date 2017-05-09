@@ -195,6 +195,9 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
                     upnpService.getControlPoint().search();
                 }
                 return true;
+            case R.id.download_all:
+                Log.d(this.getClass().getName(), "Download all images option menu selected");
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

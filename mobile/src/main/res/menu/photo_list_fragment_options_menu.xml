@@ -2,10 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/search_upnp"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title="@string/title_search"
+        android:id="@+id/download_all"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="@string/title_download_all"
         app:showAsAction="ifRoom"
-        />
-
+    />
 </menu>

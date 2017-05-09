@@ -2,7 +2,6 @@ package com.bikeonet.android.dslrbrowser.upnp;
 
 import android.util.Log;
 
-import org.fourthline.cling.UpnpService;
 import org.fourthline.cling.android.AndroidUpnpService;
 import org.fourthline.cling.model.meta.RemoteDevice;
 import org.fourthline.cling.model.meta.Service;
@@ -20,7 +19,7 @@ import java.util.HashSet;
 public class BrowseManager implements Runnable {
 
 
-    private static final int DEFAULT_RUN_CYCLE_COUNT = 3;
+    private static final int DEFAULT_RUN_CYCLE_COUNT = 10;
     private static final String TAG = BrowseManager.class.getName();
     private static final ServiceId SERVICEID = new UDAServiceId(
             "ContentDirectory");

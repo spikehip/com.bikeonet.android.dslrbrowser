@@ -7,6 +7,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.bikeonet.android.dslrbrowser.content.PhotoItem;
@@ -47,7 +49,7 @@ public class PhotoListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        this.setHasOptionsMenu(true);
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -107,5 +109,23 @@ public class PhotoListFragment extends Fragment {
     public interface OnPhotoListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onPhotoListFragmentInteraction(PhotoItem item);
+    }
+
+    /**
+     * Initialize the contents of the Fragment host's standard options menu.  You
+     * should place your menu items in to <var>menu</var>.  For this method
+     * to be called, you must have first called {@link #setHasOptionsMenu}.  See
+     * {@link Activity#onCreateOptionsMenu(Menu) Activity.onCreateOptionsMenu}
+     * for more information.
+     *
+     * @param menu     The options menu in which you place your items.
+     * @param inflater
+     * @see #setHasOptionsMenu
+     * @see #onPrepareOptionsMenu
+     * @see #onOptionsItemSelected
+     */
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.photo_list_fragment_options_menu, menu);
     }
 }

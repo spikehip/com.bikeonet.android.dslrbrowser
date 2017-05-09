@@ -88,15 +88,25 @@ public class ContentDirectoryRegistryListener implements RegistryListener {
             if (showCanonOnly && !cameraItem.isCanon()) {
                 //we are interested only in canon
             } else {
-//                int index = CameraList.ITEMS.indexOf(cameraItem);
-//                if (index > -1) {
-//                    CameraList.ITEMS.add(index, cameraItem);
-//                } else {
-                    CameraList.addItem(cameraItem);
-//                }
-
+                CameraList.addItem(cameraItem);
+                startBrowsing(cameraItem, device);
                 LocalBroadcastManager.getInstance(mContext).sendBroadcast(LocalBroadcastMessageBuilder.buildCameraListNewContentMessage());
             }
+        }
+    }
+
+    private void startBrowsing(CameraItem cameraItem, RemoteDevice device) {
+        if (!BrowseThreadRegistry.THREADS.containsKey(cameraItem.getHost()) ||
+                BrowseThreadRegistry.THREADS.get(cameraItem.getHost()).getState().equals(Thread.State.TERMINATED)) {
+            // Start browsing for images
+            BrowseManager browseManager = BrowseManager.getInstance();
+            browseManager.queueNode(device, "0");
+            Thread browseThread = new Thread(browseManager);
+            BrowseThreadRegistry.THREADS.put(cameraItem.getHost(), browseThread);
+            browseThread.start();
+        }
+        else {
+            Log.d(this.getClass().getName(), "Thread for "+cameraItem.getName()+"("+cameraItem.getHost()+") is "+BrowseThreadRegistry.THREADS.get(cameraItem.getHost()).getState().toString());
         }
     }
 
@@ -119,11 +129,7 @@ public class ContentDirectoryRegistryListener implements RegistryListener {
             }
             CameraItem cameraItem = new CameraItem(device, false);
             if ( CameraList.contains(cameraItem)) {
-                // Start browsing for images
-                BrowseManager browseManager = BrowseManager.getInstance();
-                browseManager.queueNode(device, "0");
-                Thread browseThread = new Thread(browseManager);
-                browseThread.start();
+                startBrowsing(cameraItem, device);
             }
             else {
                 SharedPreferences prefs = PreferenceManager
@@ -157,7 +163,9 @@ public class ContentDirectoryRegistryListener implements RegistryListener {
         Log.d(this.getClass().getName(),"Android UPNP Service remote device removed " + device.toString());
         final CameraItem item = new CameraItem(device, false);
             if ( CameraList.remove(item) ) {
-
+                if (BrowseThreadRegistry.THREADS.containsKey(item.getHost())) {
+                    BrowseThreadRegistry.THREADS.remove(item.getHost());
+                }
                 //noinspection Since15
                 PhotoList.ITEMS.removeIf(new Predicate<PhotoItem>() {
                     @Override

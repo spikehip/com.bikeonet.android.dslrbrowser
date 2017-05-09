@@ -16,5 +16,6 @@
     <string name="download_to_album">Download to album</string>
     <string name="download_to_album_desc">Download to a separated album</string>
 
-    <string name="title_search">Search</string>
+    <string name="title_search">Refresh</string>
+    <string name="title_download_all">Download all</string>
 </resources>
