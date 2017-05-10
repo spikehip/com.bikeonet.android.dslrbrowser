@@ -10,8 +10,10 @@ public class PhotoList {
 
     public static final ArrayList<PhotoItem> ITEMS = new ArrayList<PhotoItem>();
 
-    private static void addItem(PhotoItem item) {
-        ITEMS.add(item);
+    public static void addItem(PhotoItem item) {
+        if (!ITEMS.contains(item)) {
+            ITEMS.add(item);
+        }
     }
 
 }

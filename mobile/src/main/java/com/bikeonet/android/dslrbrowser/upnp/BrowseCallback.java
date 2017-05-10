@@ -97,7 +97,7 @@ public class BrowseCallback extends Browse {
                     }
 
                     photoItem.downloadThumbnail();
-                    PhotoList.ITEMS.add(photoItem);
+                    PhotoList.addItem(photoItem);
 
                     Log.i(TAG, photoItem.getResourceUrl());
                     Log.i(TAG, photoItem.getThumbnailResourceUrl());

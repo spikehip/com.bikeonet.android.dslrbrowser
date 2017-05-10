@@ -14,12 +14,9 @@ import org.fourthline.cling.model.meta.LocalDevice;
 import org.fourthline.cling.model.meta.RemoteDevice;
 import org.fourthline.cling.model.meta.RemoteService;
 import org.fourthline.cling.model.meta.Service;
-import org.fourthline.cling.model.types.ServiceType;
 import org.fourthline.cling.registry.Registry;
 import org.fourthline.cling.registry.RegistryListener;
 import java.util.function.Predicate;
-
-import static org.fourthline.cling.binding.xml.Descriptor.Device.ELEMENT.service;
 
 /**
  * Created by andrasbekesi on 04/05/17.
