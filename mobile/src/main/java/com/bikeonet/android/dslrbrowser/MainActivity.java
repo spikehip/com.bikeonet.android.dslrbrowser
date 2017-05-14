@@ -21,6 +21,7 @@ import com.bikeonet.android.dslrbrowser.content.CameraList;
 import com.bikeonet.android.dslrbrowser.content.PhotoItem;
 import com.bikeonet.android.dslrbrowser.content.PhotoList;
 import com.bikeonet.android.dslrbrowser.messaging.LocalBroadcastMessageBuilder;
+import com.bikeonet.android.dslrbrowser.messaging.NotificationBuilder;
 import com.bikeonet.android.dslrbrowser.upnp.BrowseManager;
 import com.bikeonet.android.dslrbrowser.upnp.ContentDirectoryRegistryListener;
 import org.fourthline.cling.android.AndroidUpnpService;
@@ -124,6 +125,8 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        NotificationBuilder.setContext(this.getApplicationContext());
 
         showCameraList();
 

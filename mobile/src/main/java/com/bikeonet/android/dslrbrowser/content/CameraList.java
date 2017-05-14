@@ -1,5 +1,7 @@
 package com.bikeonet.android.dslrbrowser.content;
 
+import com.bikeonet.android.dslrbrowser.messaging.NotificationBuilder;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -20,6 +22,7 @@ public class CameraList {
         if ( !HOSTS.contains( item.getHost() )) {
             HOSTS.add(item.getHost());
             ITEMS.add(item);
+            NotificationBuilder.showNotification(item);
         }
     }
 

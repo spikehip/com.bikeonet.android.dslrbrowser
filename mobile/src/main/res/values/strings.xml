@@ -18,4 +18,5 @@
 
     <string name="title_search">Refresh</string>
     <string name="title_download_all">Download all</string>
+    <string name="sync_with_phone">Sync with phone</string>
 </resources>
