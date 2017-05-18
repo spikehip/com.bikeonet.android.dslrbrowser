@@ -22,7 +22,6 @@ public class CameraList {
         if ( !HOSTS.contains( item.getHost() )) {
             HOSTS.add(item.getHost());
             ITEMS.add(item);
-            NotificationBuilder.showNotification(item);
         }
     }
 

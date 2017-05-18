@@ -2,6 +2,9 @@ package com.bikeonet.android.dslrbrowser.upnp;
 
 import android.util.Log;
 
+import com.bikeonet.android.dslrbrowser.content.CameraItem;
+import com.bikeonet.android.dslrbrowser.messaging.NotificationBuilder;
+
 import org.fourthline.cling.android.AndroidUpnpService;
 import org.fourthline.cling.model.meta.RemoteDevice;
 import org.fourthline.cling.model.meta.Service;

@@ -15,7 +15,6 @@ public class PhotoList {
     public static void addItem(PhotoItem item) {
         if (!ITEMS.contains(item)) {
             ITEMS.add(item);
-            NotificationBuilder.showNotification(item);
         }
 
     }

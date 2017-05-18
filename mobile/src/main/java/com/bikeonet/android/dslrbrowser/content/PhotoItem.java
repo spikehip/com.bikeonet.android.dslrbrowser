@@ -221,4 +221,5 @@ public class PhotoItem {
 
         return toString().equals(that.toString());
     }
+
 }

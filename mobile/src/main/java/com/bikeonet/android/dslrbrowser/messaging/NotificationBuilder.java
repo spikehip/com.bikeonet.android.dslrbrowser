@@ -1,19 +1,15 @@
 package com.bikeonet.android.dslrbrowser.messaging;
 
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
-
 import com.bikeonet.android.dslrbrowser.MainActivity;
 import com.bikeonet.android.dslrbrowser.R;
 import com.bikeonet.android.dslrbrowser.content.CameraItem;
 import com.bikeonet.android.dslrbrowser.content.CameraList;
 import com.bikeonet.android.dslrbrowser.content.PhotoItem;
-
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.app.NotificationCompat.WearableExtender;
 
 
 
