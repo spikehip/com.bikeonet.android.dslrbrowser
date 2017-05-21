@@ -10,6 +10,8 @@ import com.bikeonet.android.dslrbrowser.content.CameraList;
 import com.bikeonet.android.dslrbrowser.content.PhotoItem;
 import com.bikeonet.android.dslrbrowser.content.PhotoList;
 import com.bikeonet.android.dslrbrowser.messaging.LocalBroadcastMessageBuilder;
+import com.bikeonet.android.dslrbrowser.messaging.NotificationBuilder;
+
 import org.fourthline.cling.model.meta.LocalDevice;
 import org.fourthline.cling.model.meta.RemoteDevice;
 import org.fourthline.cling.model.meta.RemoteService;
@@ -121,9 +123,6 @@ public class ContentDirectoryRegistryListener implements RegistryListener {
     public void remoteDeviceUpdated(Registry registry, RemoteDevice device) {
         Log.d(this.getClass().getName(),"Android UPNP Service remote device updated " + device.toString());
         if (device.isFullyHydrated()) {
-            for(RemoteService s : device.getServices()) {
-                Log.d(this.getClass().getName(), s.toString());
-            }
             CameraItem cameraItem = new CameraItem(device, false);
             if ( CameraList.contains(cameraItem)) {
                 startBrowsing(cameraItem, device);

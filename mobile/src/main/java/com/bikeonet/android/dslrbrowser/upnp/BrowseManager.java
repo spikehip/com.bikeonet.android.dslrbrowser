@@ -144,6 +144,7 @@ public class BrowseManager implements Runnable {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
     }
 
     public boolean isLoading() {

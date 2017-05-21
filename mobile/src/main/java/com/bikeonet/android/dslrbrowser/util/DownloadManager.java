@@ -18,6 +18,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import com.bikeonet.android.dslrbrowser.content.PhotoItem;
+import com.bikeonet.android.dslrbrowser.messaging.NotificationBuilder;
 
 public class DownloadManager extends AsyncTask<PhotoItem, Long, String> {
 
@@ -110,6 +111,7 @@ public class DownloadManager extends AsyncTask<PhotoItem, Long, String> {
 
             Long progress = new Long((int) ((i / (float) count) * 100));
             publishProgress(progress);
+
         }
 
         if (count == 1)
@@ -197,15 +199,15 @@ public class DownloadManager extends AsyncTask<PhotoItem, Long, String> {
                                 + ((System.currentTimeMillis() - startTime) / 1000)
                                 + " sec");
 
-                try {
-                    MediaStore.Images.Media.insertImage(
-                            context.getContentResolver(), mediaFileName,
-                            fileName, "CANON");
-                } catch (OutOfMemoryError e) {
-                    //Toast.makeText(context, "Not enough memory to store media",
-                    //		Toast.LENGTH_LONG).show();
-                    Log.d("ImageManager", e.getMessage());
-                }
+//                try {
+//                    MediaStore.Images.Media.insertImage(
+//                            context.getContentResolver(), mediaFileName,
+//                            fileName, "CANON");
+//                } catch (OutOfMemoryError e) {
+//                    //Toast.makeText(context, "Not enough memory to store media",
+//                    //		Toast.LENGTH_LONG).show();
+//                    Log.d("ImageManager", e.getMessage());
+//                }
 
             }
 

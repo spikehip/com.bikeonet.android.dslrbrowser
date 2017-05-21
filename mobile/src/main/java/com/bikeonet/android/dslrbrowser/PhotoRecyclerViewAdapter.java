@@ -42,7 +42,7 @@ public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecycler
             holder.mThumbnailView.setImageBitmap(mValues.get(position).getThumbnail());
         }
 
-        holder.mProgressView.setText("0 %");
+        //holder.mProgressView.setText("0 %");
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,19 +64,19 @@ public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecycler
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final ImageView mThumbnailView;
-        public final TextView mProgressView;
+        //public final TextView mProgressView;
         public PhotoItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mThumbnailView = (ImageView) view.findViewById(R.id.thumbnailView);
-            mProgressView = (TextView) view.findViewById(R.id.progressView);
+            //mProgressView = (TextView) view.findViewById(R.id.progressView);
         }
 
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mProgressView.getText() + "'";
-        }
+//        @Override
+//        public String toString() {
+//            return super.toString() + " '" + mProgressView.getText() + "'";
+//        }
     }
 }
