@@ -7,10 +7,13 @@ import com.bikeonet.android.dslrbrowser.R;
 import com.bikeonet.android.dslrbrowser.content.CameraItem;
 import com.bikeonet.android.dslrbrowser.content.CameraList;
 import com.bikeonet.android.dslrbrowser.content.PhotoItem;
+import com.bikeonet.android.dslrbrowser.content.PhotoList;
+
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
+import org.fourthline.cling.Main;
 
 
 /**
@@ -62,19 +65,24 @@ public class NotificationBuilder {
         if (mContext != null) {
             // Build intent for notification content
             Intent viewIntent = new Intent(mContext, MainActivity.class);
+            viewIntent.setAction("VIEW_CAMERA_ITEM_ACTION");
+            viewIntent.putExtra("cameraId", item.getHost());
+            //Intent syncIntent = LocalBroadcastMessageBuilder.buildSyncCameraMessage(item);
             Intent syncIntent = new Intent(mContext, MainActivity.class);
-            //viewIntent.putExtra(EXTRA_EVENT_ID, eventId);
+            syncIntent.setAction(LocalBroadcastMessageBuilder.DSLRBROWSER_SYNC_CAMERA);
+            syncIntent.putExtra("host", item.getHost());
             PendingIntent viewPendingIntent =
-                    PendingIntent.getActivity(mContext, 0, viewIntent, 0);
+                    PendingIntent.getActivity(mContext, 0, viewIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            PendingIntent syncPendingIntent =
-                    PendingIntent.getActivity(mContext, 0, syncIntent, 0);
+            PendingIntent syncPendingIntent = PendingIntent.getActivity(mContext, 0, syncIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            int numberOfPhotosOnCamera = PhotoList.filterOnCameraHost(item.getHost()).size();
 
             NotificationCompat.Builder notificationBuilder =
                     new NotificationCompat.Builder(mContext)
                             .setSmallIcon(R.drawable.ic_notifications_black_24dp)
                             .setContentTitle(item.getName())
-                            .setContentText(item.getDescription())
+                            .setContentText("Found "+numberOfPhotosOnCamera+" photos.")
                             .setContentIntent(viewPendingIntent)
                             .addAction(R.drawable.common_full_open_on_phone, mContext.getString(R.string.sync_with_phone), syncPendingIntent);
 

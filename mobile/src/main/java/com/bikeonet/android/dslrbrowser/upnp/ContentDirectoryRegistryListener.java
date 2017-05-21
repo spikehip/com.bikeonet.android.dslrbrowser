@@ -10,11 +10,8 @@ import com.bikeonet.android.dslrbrowser.content.CameraList;
 import com.bikeonet.android.dslrbrowser.content.PhotoItem;
 import com.bikeonet.android.dslrbrowser.content.PhotoList;
 import com.bikeonet.android.dslrbrowser.messaging.LocalBroadcastMessageBuilder;
-import com.bikeonet.android.dslrbrowser.messaging.NotificationBuilder;
-
 import org.fourthline.cling.model.meta.LocalDevice;
 import org.fourthline.cling.model.meta.RemoteDevice;
-import org.fourthline.cling.model.meta.RemoteService;
 import org.fourthline.cling.model.meta.Service;
 import org.fourthline.cling.registry.Registry;
 import org.fourthline.cling.registry.RegistryListener;
@@ -100,6 +97,7 @@ public class ContentDirectoryRegistryListener implements RegistryListener {
             // Start browsing for images
             BrowseManager browseManager = BrowseManager.getInstance();
             browseManager.queueNode(device, "0");
+            browseManager.sendNotificationOnFinishedFor(cameraItem);
             Thread browseThread = new Thread(browseManager);
             BrowseThreadRegistry.THREADS.put(cameraItem.getHost(), browseThread);
             browseThread.start();

@@ -31,6 +31,7 @@ public class BrowseManager implements Runnable {
     private boolean loading = false;
     private int runCount = DEFAULT_RUN_CYCLE_COUNT;
     private final AndroidUpnpService upnpService;
+    private CameraItem cameraItem;
 
     private BrowseManager(AndroidUpnpService upnpService) {
         this.upnpService = upnpService;
@@ -145,6 +146,10 @@ public class BrowseManager implements Runnable {
             e.printStackTrace();
         }
 
+        if (cameraItem != null) {
+            NotificationBuilder.showNotification(cameraItem);
+        }
+
     }
 
     public boolean isLoading() {
@@ -153,6 +158,10 @@ public class BrowseManager implements Runnable {
 
     public void setLoading(boolean loading) {
         this.loading = loading;
+    }
+
+    public void sendNotificationOnFinishedFor(CameraItem cameraItem) {
+        this.cameraItem = cameraItem;
     }
 
 }

@@ -22,6 +22,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -44,9 +45,9 @@ import org.fourthline.cling.android.AndroidUpnpServiceImpl;
 import org.fourthline.cling.registry.RegistryListener;
 
 import java.io.File;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements CameraItemFragment.OnCameraListFragmentInteractionListener,
         PhotoListFragment.OnPhotoListFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener {
@@ -75,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
                     photoListFragment.getViewAdapter().notifyDataSetChanged();
                 }
             }
-
         }
     }
 
@@ -176,6 +176,39 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
                 updateCameraListReceiver,
                 updateCameraListIntentFilter);
 
+    }
+
+    @Override
+    protected void onPostResume() {
+        NotificationManagerCompat notificationManager =
+                NotificationManagerCompat.from(this);
+        String intentAction = getIntent().getAction();
+        if (intentAction != null &&
+                intentAction.equals(LocalBroadcastMessageBuilder.DSLRBROWSER_SYNC_CAMERA) &&
+                getIntent().getStringExtra("host") != null &&
+                !getIntent().getBooleanExtra("processed", false)) {
+            String host = getIntent().getStringExtra("host");
+            if ( checkSDCardAvailable() ) {
+                File pdir = getExternalMediaDirs()[0];
+                File dcim = new File(pdir.getAbsolutePath() + "/"+getDownloadDirectory());
+                if ( createDir(dcim)) {
+                    DownloadManager dm = new DownloadManager(dcim.getAbsolutePath(), this);
+                    //noinspection Since15
+                    List<PhotoItem> filteredList = PhotoList.filterOnCameraHost(host);
+                    PhotoItem[] imageArray = filteredList.toArray(new PhotoItem[filteredList.size()]);
+                    dm.execute(imageArray);
+                }
+            }
+            getIntent().putExtra("processed", true);
+            notificationManager.cancelAll();
+        }
+
+        if (intentAction != null &&
+                intentAction.equals("VIEW_CAMERA_ITEM_ACTION")) {
+            notificationManager.cancelAll();
+        }
+
+        super.onPostResume();
     }
 
     @Override
