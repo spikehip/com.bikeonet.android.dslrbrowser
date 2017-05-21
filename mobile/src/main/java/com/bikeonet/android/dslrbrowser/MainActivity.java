@@ -164,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
 
             @Override
             public void onServiceDisconnected(ComponentName name) {
+                Log.i(this.getClass().getName(), "UPNP Service Disconnected.");
                 upnpService = null;
             }
         };
@@ -184,8 +185,9 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
         if (upnpService != null) {
             upnpService.getRegistry().removeListener(registryListener);
         }
+
         // This will stop the UPnP service if nobody else is bound to it
-        getApplicationContext().unbindService(serviceConnection);
+        unbindService(serviceConnection);
     }
 
     /**
@@ -223,12 +225,15 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
             case R.id.download_all:
                 Log.d(this.getClass().getName(), "Download all images option menu selected");
                 if ( checkSDCardAvailable() ) {
-                    File pdir = Environment.getExternalStorageDirectory();
-                    File dcim = new File(pdir.getAbsolutePath() + "/DCIM/"+getDownloadDirectory());
+                    File pdir = getExternalMediaDirs()[0];
+                    File dcim = new File(pdir.getAbsolutePath() + "/"+getDownloadDirectory());
                     if ( createDir(dcim)) {
                         DownloadManager dm = new DownloadManager(dcim.getAbsolutePath(), this);
                         PhotoItem[] imageArray = PhotoList.ITEMS.toArray(new PhotoItem[PhotoList.ITEMS.size()]);
                         dm.execute(imageArray);
+                    }
+                    else {
+                        showErrorDialog("Error", "Failed to create storage folder " + dcim, "Ok");
                     }
                 }
                 else {

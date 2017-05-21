@@ -59,7 +59,7 @@ public class DownloadManager extends AsyncTask<PhotoItem, Long, String> {
 
             mTempFilePath = DownloadFromUrl(imageURL, fileName);
 
-            if (insertGPS) {
+            if (insertGPS && mTempFilePath != null) {
                 try {
                     ExifInterface exifInterface = new ExifInterface(
                             mTempFilePath);
@@ -181,15 +181,15 @@ public class DownloadManager extends AsyncTask<PhotoItem, Long, String> {
 
                 String mediaFileName = absFilename;
 
-                ExifInterface exifInterface = new ExifInterface(
-                        absFilename);
-                if (exifInterface.hasThumbnail()) {
-                    String thumbFile = PATH + "/thumb_" + fileName;
-                    FileOutputStream thumbOutputStream = new FileOutputStream(thumbFile);
-                    thumbOutputStream.write(exifInterface.getThumbnail());
-                    thumbOutputStream.close();
-                    mediaFileName = thumbFile;
-                }
+//                ExifInterface exifInterface = new ExifInterface(
+//                        absFilename);
+//                if (exifInterface.hasThumbnail()) {
+//                    String thumbFile = PATH + "/thumb_" + fileName;
+//                    FileOutputStream thumbOutputStream = new FileOutputStream(thumbFile);
+//                    thumbOutputStream.write(exifInterface.getThumbnail());
+//                    thumbOutputStream.close();
+//                    mediaFileName = thumbFile;
+//                }
 
 
                 Log.d("ImageManager",
