@@ -23,6 +23,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -57,6 +58,37 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
     SettingsFragment settingsFragment = SettingsFragment.newInstance("", "");
     PhotoListFragment photoListFragment = PhotoListFragment.newInstance(4);
     private LocationManager locationManager;
+    private final LocationListener locationListener = new LocationListener() {
+
+        @Override
+        public void onLocationChanged(Location location) {
+            LocationStore.getInstance().setLastLocation(location);
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status,
+                                    Bundle extras) {
+            Log.i(this.getClass().getName(), provider + " status changed " + status);
+
+        }
+
+        /**
+         * 07-12 10:55:22.208: I/com.bikeonet.android.dslrbrowser.DslrBrowserApplication(1431): gps disabled
+         * 07-12 10:55:33.349: I/com.bikeonet.android.dslrbrowser.DslrBrowserApplication(1431): gps enabled
+         */
+
+        @Override
+        public void onProviderEnabled(String provider) {
+            Log.i(this.getClass().getName(), provider + " enabled");
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            Log.i(this.getClass().getName(), provider + " disabled");
+        }
+
+
+    };
 
     private class UpdateUIListReceiver extends BroadcastReceiver {
         // Prevents instantiation
@@ -193,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
                 File dcim = new File(pdir.getAbsolutePath() + "/"+getDownloadDirectory());
                 if ( createDir(dcim)) {
                     DownloadManager dm = new DownloadManager(dcim.getAbsolutePath(), this);
-                    //noinspection Since15
+
                     List<PhotoItem> filteredList = PhotoList.filterOnCameraHost(host);
                     PhotoItem[] imageArray = filteredList.toArray(new PhotoItem[filteredList.size()]);
                     dm.execute(imageArray);
@@ -341,48 +373,75 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
         locationManager = (LocationManager) this
                 .getSystemService(Context.LOCATION_SERVICE);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
+
+// Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+                showErrorDialog("Permission missing", "Please grant permission to access location information", "Ok");
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        10010);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
         }
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
-                0, new LocationListener() {
 
-                    @Override
-                    public void onLocationChanged(Location location) {
-                        LocationStore.getInstance().setLastLocation(location);
-                    }
+        try {
 
-                    @Override
-                    public void onStatusChanged(String provider, int status,
-                                                Bundle extras) {
-                        Log.i(this.getClass().getName(), provider + " status changed " + status);
+            Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            LocationStore.getInstance().setLastLocation(lastKnownLocation);
 
-                    }
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
+                    0, locationListener);
 
-                    /**
-                     * 07-12 10:55:22.208: I/com.bikeonet.android.dslrbrowser.DslrBrowserApplication(1431): gps disabled
-                     * 07-12 10:55:33.349: I/com.bikeonet.android.dslrbrowser.DslrBrowserApplication(1431): gps enabled
-                     */
+        }
+        catch (SecurityException e) {
+            Log.e(this.getClass().getName(), e.getMessage());
+        }
 
-                    @Override
-                    public void onProviderEnabled(String provider) {
-                        Log.i(this.getClass().getName(), provider + " enabled");
-                    }
+    }
 
-                    @Override
-                    public void onProviderDisabled(String provider) {
-                        Log.i(this.getClass().getName(), provider + " disabled");
-                    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 10010: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
 
-                });
+                    doInitializeLocationManager();
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 }
