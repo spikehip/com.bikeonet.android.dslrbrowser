@@ -1,4 +1,4 @@
-package com.example.andrasbekesi.dslrbrowser;
+package com.bikeonet.android.dslrbrowser;
 
 import android.app.Notification;
 import android.app.NotificationManager;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.andrasbekesi.dslrbrowser">
+    package="com.bikeonet.android.dslrbrowser">
 
     <uses-feature android:name="android.hardware.type.watch" />
 
@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault">
         <activity
-            android:name="com.example.andrasbekesi.com.bikeonet.android.dslrbrowser.NewCameraStubBroadcastActivity"
+            android:name="com.bikeonet.android.dslrbrowser.NewCameraStubBroadcastActivity"
             android:label="NewCameraStubBroadcastActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,17 +20,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.andrasbekesi.com.bikeonet.android.dslrbrowser.NewCameraNotificationDisplayActivity"
+            android:name="com.bikeonet.android.dslrbrowser.NewCameraNotificationDisplayActivity"
             android:allowEmbedded="true"
             android:exported="true"
             android:taskAffinity=""
             android:theme="@android:style/Theme.DeviceDefault.Light"></activity>
 
         <receiver
-            android:name="com.example.andrasbekesi.com.bikeonet.android.dslrbrowser.NewCameraPostNotificationReceiver"
+            android:name="com.bikeonet.android.dslrbrowser.NewCameraPostNotificationReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.example.andrasbekesi.dslrbrowser.SHOW_NOTIFICATION" />
+                <action android:name="com.bikeonet.android.dslrbrowser.SHOW_NOTIFICATION" />
             </intent-filter>
         </receiver>
     </application>
