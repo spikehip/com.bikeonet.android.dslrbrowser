@@ -1,0 +1,5 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Mon May 08 11:48:50 CEST 2017
+cling-support-2.1.2-SNAPSHOT.pom>=
+cling-support-2.1.2-SNAPSHOT-sources.jar>=
+cling-support-2.1.2-SNAPSHOT.jar>=
