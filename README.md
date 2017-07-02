@@ -1,5 +1,9 @@
 # DSLR Browser for Android
 
+[![Build Status](https://travis-ci.org/spikehip/com.bikeonet.android.dslrbrowser.svg?branch=master)](https://travis-ci.org/spikehip/com.bikeonet.android.dslrbrowser)
+
+http://bekesiandras.hu/dslrbrowser/ 
+
 ## Features
 
 With DSLR Browser you can connect through Wi-Fi to a Canon digital SLR camera equipped with a wireless transmitter like the WFT-E5 and WFT-E7 (Ver.2).
@@ -26,3 +30,4 @@ Tested with the following cameras:
 ## Download 
 
 https://play.google.com/store/apps/details?id=com.bikeonet.android.dslrbrowser 
+
