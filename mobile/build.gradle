@@ -33,6 +33,10 @@ android {
     packagingOptions {
         pickFirst 'META-INF/beans.xml'
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 
