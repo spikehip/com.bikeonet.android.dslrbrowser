@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 repositories {
     maven {
         // URL can refer to a local directory
-        url "/Users/andrasbekesi/.m2/repository/"
+        url "./lib/"
     }
 
 }
