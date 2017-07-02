@@ -1,12 +1,9 @@
 language: android
 jdk:
   - oraclejdk8
-sudo: false
-before_script:
-  - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
-  - emulator -avd test -no-skin -no-audio -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
+script:
+  # By default Travis-ci executes './gradlew build connectedCheck' if no 'script:' section found.
+  - ./gradlew build
 android:
   components:
     # Uncomment the lines below if you want to
