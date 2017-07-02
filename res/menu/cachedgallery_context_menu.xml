@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu
-  xmlns:android="http://schemas.android.com/apk/res/android">
-  	<item android:title="Send" android:id="@+id/sendcachedgalleryitem"></item>
-    <item android:title="Open" android:id="@+id/opencachedgalleryitem"></item>
-    <item android:title="Delete" android:id="@+id/deletecachedgalleryitem"></item>
-</menu>

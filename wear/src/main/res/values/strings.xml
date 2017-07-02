@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">DSLRBrowser</string>
+
+    <string name="hello">Hello World!</string>
+    <string name="title">Hello Notification!</string>
+    <string name="notification_posted">Notification posted</string>
+    <string name="title_activity_dslrbrowser_wear_main">DSLRBrowser</string>
+</resources>

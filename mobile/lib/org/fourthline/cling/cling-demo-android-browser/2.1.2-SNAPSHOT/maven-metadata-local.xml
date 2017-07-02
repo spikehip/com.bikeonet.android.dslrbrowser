@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>org.fourthline.cling</groupId>
+  <artifactId>cling-demo-android-browser</artifactId>
+  <version>2.1.2-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <localCopy>true</localCopy>
+    </snapshot>
+    <lastUpdated>20170508094721</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>2.1.2-SNAPSHOT</value>
+        <updated>20170508094721</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>apk</extension>
+        <value>2.1.2-SNAPSHOT</value>
+        <updated>20170508094721</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>2.1.2-SNAPSHOT</value>
+        <updated>20170508094721</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>

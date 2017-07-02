@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/general_preferences">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_canon_only"
+            android:title="@string/show_canon_only"
+            android:summary="@string/show_canon_only_desc" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="insert_gps"
+            android:title="@string/insert_gps"
+            android:summary="@string/insert_gps_desc" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="download_to_album"
+            android:title="@string/download_to_album"
+            android:summary="@string/download_to_album_desc" />
+
+
+
+    </PreferenceCategory>
+</PreferenceScreen>
