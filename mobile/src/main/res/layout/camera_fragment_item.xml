@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
@@ -8,7 +9,8 @@
         android:id="@+id/deviceicon"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:src="@drawable/camera_75"/>
+        android:src="@drawable/camera_75"
+        tools:ignore="ContentDescription" />
 
 
     <LinearLayout
@@ -17,12 +19,12 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/id"
+            android:id="@+id/devicename"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:text="Canon EOS 7D Mark II"
+            android:text="@string/canon_eos_7d_mark_ii"
             android:textAppearance="?attr/textAppearanceListItem" />
 
         <TextView
@@ -31,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:text="10/153"
+            android:text="@string/_10_153"
             android:textAppearance="?attr/textAppearanceListItemSmall" />
     </LinearLayout>
 

@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Locale;
 
 
 /**
@@ -95,7 +96,7 @@ public class CameraItem {
         int width=0;
         String iconurl = "";
         for(Icon icon : remoteDevice.getIcons()) {
-            if (icon.getWidth() > width && icon.getMimeType().toString().toLowerCase().contains("png")) {
+            if (icon.getWidth() > width && icon.getMimeType().toString().toLowerCase(Locale.ROOT).contains("png")) {
                 width = icon.getWidth();
                 String host = remoteDevice.getIdentity().getDescriptorURL().getProtocol() + "://" + remoteDevice.getIdentity().getDescriptorURL().getHost() + ":" + remoteDevice.getIdentity().getDescriptorURL().getPort();
                 String iconPath = icon.getUri().getPath();
@@ -109,7 +110,7 @@ public class CameraItem {
         int width=1024;
         String iconurl = "";
         for(Icon icon : remoteDevice.getIcons()) {
-            if (icon.getWidth() <= width && icon.getMimeType().toString().toLowerCase().contains("png")) {
+            if (icon.getWidth() <= width && icon.getMimeType().toString().toLowerCase(Locale.ROOT).contains("png")) {
                 width = icon.getWidth();
                 String host = remoteDevice.getIdentity().getDescriptorURL().getProtocol() + "://" + remoteDevice.getIdentity().getDescriptorURL().getHost() + ":" + remoteDevice.getIdentity().getDescriptorURL().getPort();
                 String iconPath = icon.getUri().getPath();
@@ -154,7 +155,7 @@ public class CameraItem {
     }
 
     public boolean isCanon() {
-        if ( this.name.toLowerCase().contains("canon") || this.description.toLowerCase().contains("canon")) {
+        if ( this.name.toLowerCase(Locale.ROOT).contains("canon") || this.description.toLowerCase(Locale.ROOT).contains("canon")) {
             return true;
         }
         return false;

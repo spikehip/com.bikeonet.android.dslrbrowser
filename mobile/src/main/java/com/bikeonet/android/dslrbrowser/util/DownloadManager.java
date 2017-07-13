@@ -11,19 +11,16 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
-import android.media.ExifInterface;
+import android.support.media.ExifInterface;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.util.Log;
-
 import com.bikeonet.android.dslrbrowser.content.PhotoItem;
-import com.bikeonet.android.dslrbrowser.messaging.NotificationBuilder;
+
 
 public class DownloadManager extends AsyncTask<PhotoItem, Long, String> {
 
-    private final String PATH; // =
-    // "/data/data/com.bikeonet.android.sampleUpnpBrowser/";
+    private final String PATH; // = "/data/data/com.bikeonet.android.sampleUpnpBrowser/";
     private final Context context;
     private ProgressDialog progressDialog;
     private int count;
@@ -109,7 +106,7 @@ public class DownloadManager extends AsyncTask<PhotoItem, Long, String> {
                 }
             }
 
-            Long progress = new Long((int) ((i / (float) count) * 100));
+            Long progress = Long.valueOf((int) ((i / (float) count) * 100));
             publishProgress(progress);
 
         }
