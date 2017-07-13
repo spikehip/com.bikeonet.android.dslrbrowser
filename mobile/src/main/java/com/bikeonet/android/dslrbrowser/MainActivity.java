@@ -1,6 +1,7 @@
 package com.bikeonet.android.dslrbrowser;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -324,6 +325,8 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
         AlertDialog alert = builder.create();
         alert.show();
     }
+
+    @SuppressLint("SimpleDateFormat")
     private String getDownloadDirectory() {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(this);
