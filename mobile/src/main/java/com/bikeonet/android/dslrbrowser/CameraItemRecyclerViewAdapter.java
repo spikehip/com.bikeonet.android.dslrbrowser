@@ -8,12 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bikeonet.android.dslrbrowser.content.CameraItem;
-import com.bikeonet.android.dslrbrowser.content.DummyContent.DummyItem;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link CameraItem} and makes a call to the
  * specified {@link CameraItemFragment.OnCameraListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */

@@ -13,8 +13,6 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
-import org.fourthline.cling.Main;
-
 
 /**
  * Created by andrasbekesi on 14/05/17.
