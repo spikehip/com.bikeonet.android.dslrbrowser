@@ -12,10 +12,10 @@ repositories {
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.2'
     defaultConfig {
         applicationId "com.bikeonet.android.dslrbrowser"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 27
         versionCode 11
         versionName "1.0.1"

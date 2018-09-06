@@ -7,4 +7,10 @@
         android:title="@string/title_download_all"
         app:showAsAction="ifRoom"
     />
+    <item
+        android:id="@+id/selection_mode_on"
+        android:icon="@android:drawable/checkbox_on_background"
+        android:title="@string/title_selection_mode_on"
+        app:showAsAction="ifRoom"
+        />
 </menu>

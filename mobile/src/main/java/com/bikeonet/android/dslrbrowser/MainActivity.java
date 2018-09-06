@@ -2,6 +2,7 @@ package com.bikeonet.android.dslrbrowser;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -295,7 +296,8 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
                     File dcim = new File(pdir.getAbsolutePath() + "/"+getDownloadDirectory());
                     if ( createDir(dcim)) {
                         DownloadManager dm = new DownloadManager(dcim.getAbsolutePath(), this);
-                        PhotoItem[] imageArray = PhotoList.ITEMS.toArray(new PhotoItem[PhotoList.ITEMS.size()]);
+                        PhotoItem[] imageArray = PhotoList.getAllItems().toArray(new PhotoItem[PhotoList.getAllItems().size()]);
+                        Log.d(this.getClass().getName(), "Starting download of "+imageArray.length+" number of images...");
                         dm.execute(imageArray);
                     }
                     else {
@@ -304,6 +306,18 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
                 }
                 else {
                     showErrorDialog("Error", "Storage media not available", "Ok");
+                }
+                return true;
+            case R.id.selection_mode_on:
+                Log.d(this.getClass().getName(), "Entering selection mode");
+                PhotoRecyclerViewAdapter.isSelectionMode = !PhotoRecyclerViewAdapter.isSelectionMode;
+                if (photoListFragment != null && photoListFragment.getViewAdapter() != null) {
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .detach(photoListFragment)
+                            .attach(photoListFragment)
+                            .commit();
+                    //photoListFragment.getViewAdapter().notifyDataSetChanged();
                 }
                 return true;
             default:

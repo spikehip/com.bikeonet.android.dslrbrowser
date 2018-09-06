@@ -1,11 +1,13 @@
 package com.bikeonet.android.dslrbrowser;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +16,16 @@ import android.view.ViewGroup;
 
 import com.bikeonet.android.dslrbrowser.content.CameraItem;
 import com.bikeonet.android.dslrbrowser.content.CameraList;
+
+import org.fourthline.cling.model.ValidationException;
+import org.fourthline.cling.model.meta.RemoteDevice;
+import org.fourthline.cling.model.meta.RemoteDeviceIdentity;
+import org.fourthline.cling.model.types.UDN;
+
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.UnknownHostException;
 
 /**
  * A fragment representing a list of Items.
@@ -70,6 +82,24 @@ public class CameraItemFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
+
+            //TODO: DEBUG
+//            try {
+//                byte[] ipAddr = new byte[]{127, 0, 0, 1};
+//                InetAddress addr = InetAddress.getByAddress(ipAddr);
+//                RemoteDevice rd = new RemoteDevice(new RemoteDeviceIdentity(new UDN("TestDevice"), 3600, new URL("http://localhost:8200/"), ipAddr,
+//                addr));
+//                CameraList.addItem(new CameraItem(rd, false ));
+//            }
+//            catch (MalformedURLException e) {
+//                Log.e(this.getClass().getName(), e.getMessage());
+//            }
+//            catch (ValidationException e) {
+//                Log.e(this.getClass().getName(), e.getMessage());
+//            }
+//            catch (UnknownHostException e) {
+//                Log.e(this.getClass().getName(), e.getMessage());
+//            }
 
             va = new CameraItemRecyclerViewAdapter(CameraList.ITEMS, mListener);
             recyclerView.setAdapter(va);

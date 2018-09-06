@@ -103,7 +103,7 @@ public class CameraItem {
                 iconurl = host + iconPath;
             }
         }
-        return createBitmapFromByteArray(downloadIconFromUrl(iconurl));
+        return iconurl.length() > 0 ? createBitmapFromByteArray(downloadIconFromUrl(iconurl)) : null;
     }
 
     private Bitmap downloadSmallIcon() throws IOException {
@@ -117,7 +117,7 @@ public class CameraItem {
                 iconurl = host + iconPath;
             }
         }
-        return createBitmapFromByteArray(downloadIconFromUrl(iconurl));
+        return iconurl.length()>0 ? createBitmapFromByteArray(downloadIconFromUrl(iconurl)) : null;
     }
 
     private Bitmap createBitmapFromByteArray(byte[] icon) {
