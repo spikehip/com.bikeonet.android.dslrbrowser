@@ -23,6 +23,7 @@ public class PhotoItem {
     private Bitmap thumbnail;
     private String resourceUrl;
     private String thumbnailResourceUrl;
+    private boolean isSelected;
 
     public CameraItem getCameraItem() {
         return cameraItem;
@@ -62,6 +63,14 @@ public class PhotoItem {
 
     public void setThumbnailResourceUrl(String thumbnailResourceUrl) {
         this.thumbnailResourceUrl = thumbnailResourceUrl;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 
     public void downloadThumbnail() {

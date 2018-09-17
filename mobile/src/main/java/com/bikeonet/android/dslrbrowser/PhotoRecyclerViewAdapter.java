@@ -1,12 +1,15 @@
 package com.bikeonet.android.dslrbrowser;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 
 import com.bikeonet.android.dslrbrowser.content.PhotoItem;
+import com.bikeonet.android.dslrbrowser.content.PhotoList;
 
 import java.util.List;
 
@@ -16,6 +19,8 @@ import java.util.List;
  * TODO: Replace the implementation with code for your data type.
  */
 public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecyclerViewAdapter.ViewHolder> {
+
+    public static boolean isSelectionMode = false;
 
     private final List<PhotoItem> mValues;
     private final PhotoListFragment.OnPhotoListFragmentInteractionListener mListener;
@@ -39,8 +44,8 @@ public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecycler
         if (mValues.get(position).getThumbnail() != null ) {
             holder.mThumbnailView.setImageBitmap(mValues.get(position).getThumbnail());
         }
-
-        //holder.mProgressView.setText("0 %");
+        holder.checkBox.setText(holder.mItem.getTitle());
+        holder.checkBox.setChecked(holder.mItem.isSelected());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,12 +67,28 @@ public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecycler
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final ImageView mThumbnailView;
+        public final CheckBox checkBox;
         public PhotoItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mThumbnailView = view.findViewById(R.id.thumbnailView);
+            checkBox = view.findViewById(R.id.checkBox);
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("com.bikeonet.checkboxli", "checkbox "+(((CheckBox) v).isChecked()?"checked":"unchecked")+" for item "+mItem.toString());
+                    PhotoList.selectItem(mItem, ((CheckBox) v).isChecked());
+                }
+            });
+
+            if (isSelectionMode) {
+                checkBox.setVisibility(View.VISIBLE);
+            }
+            else {
+                checkBox.setVisibility(View.GONE);
+            }
         }
 
     }

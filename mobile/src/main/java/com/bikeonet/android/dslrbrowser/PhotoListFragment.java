@@ -1,5 +1,6 @@
 package com.bikeonet.android.dslrbrowser;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.bikeonet.android.dslrbrowser.content.CameraList;
 import com.bikeonet.android.dslrbrowser.content.PhotoItem;
 import com.bikeonet.android.dslrbrowser.content.PhotoList;
 
@@ -69,6 +72,17 @@ public class PhotoListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
+
+            //TODO: DEBUG
+//            if (CameraList.ITEMS.size() > 0) {
+//                for (int i = 0; i < 10; i++) {
+//                    PhotoItem testItem = new PhotoItem();
+//                    testItem.setCameraItem(CameraList.ITEMS.get(0));
+//                    testItem.setTitle("test-" + i + ".jpg");
+//                    PhotoList.addItem(testItem);
+//                }
+//            }
+
             va = new PhotoRecyclerViewAdapter(PhotoList.ITEMS, mListener);
             recyclerView.setAdapter(va);
         }
