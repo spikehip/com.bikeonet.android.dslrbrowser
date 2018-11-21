@@ -34,7 +34,7 @@ public class PhotoItem {
     }
 
     public String getTitle() {
-        return title;
+        return title.toUpperCase().endsWith(".JPG")?title:title+".JPG";
     }
 
     public void setTitle(String title) {
