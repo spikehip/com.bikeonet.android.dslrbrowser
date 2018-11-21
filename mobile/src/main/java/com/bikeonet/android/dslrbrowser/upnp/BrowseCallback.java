@@ -73,7 +73,7 @@ public class BrowseCallback extends Browse {
                     long size = 0;
                     for (Res res : item.getResources()) {
                         try {
-                            if (res.getResolution() != null && res.getSize() > size) {
+                            if (res.getResolution() != null && (res.getSize()!=null?res.getSize():0) > size) {
                                 size = res.getSize();
                                 photoItem.setResourceUrl(res.getValue());
                             }
@@ -85,22 +85,25 @@ public class BrowseCallback extends Browse {
 
                     //select the smallest
                     for (Res res : item.getResources()) {
+                        Log.i(TAG, res.getValue());
                         try {
-                            if (res.getResolution() != null && res.getSize() < size) {
+                            if (res.getProtocolInfo() != null && res.getProtocolInfo().getAdditionalInfo() != null && res.getProtocolInfo().getAdditionalInfo().toUpperCase().contains("JPEG_TN") ) {
+                                photoItem.setThumbnailResourceUrl(res.getValue());
+                                break;
+                            }
+                            long currentSize = res.getSize()!=null?res.getSize():0;
+                            if (res.getResolution() != null && currentSize > 0 && currentSize < size ) {
                                 size = res.getSize();
                                 photoItem.setThumbnailResourceUrl(res.getValue());
                             }
                         } catch (NullPointerException e) {
                             Log.e(TAG, "failed size for "+res.getValue());
                         }
-                        Log.i(TAG, res.getValue());
                     }
 
                     photoItem.downloadThumbnail();
                     PhotoList.addItem(photoItem);
 
-                    Log.i(TAG, photoItem.getResourceUrl());
-                    Log.i(TAG, photoItem.getThumbnailResourceUrl());
                 }
             }
 
@@ -148,6 +151,7 @@ public class BrowseCallback extends Browse {
         @Override
         public void failure(ActionInvocation invocation, UpnpResponse operation,
                             String defaultMsg) {
+            invocation.getFailure().printStackTrace();
             Log.e(TAG, "FAILURE for container " + currentNode + " Action "
                     + invocation.getAction().getName());
             Log.e(TAG, "FAILURE: Operation "
