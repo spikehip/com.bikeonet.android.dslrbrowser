@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Download"
+        android:textSize="6dp"
         />
 
     <ImageView
@@ -19,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/picture_75"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        />
 
 </LinearLayout>

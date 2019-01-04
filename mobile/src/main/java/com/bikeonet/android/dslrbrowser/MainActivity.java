@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
                     photoListFragment.getViewAdapter().notifyDataSetChanged();
                 }
             }
+
         }
     }
 
@@ -126,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
     @Override
     public void onPhotoListFragmentInteraction(PhotoItem item) {
         Log.d(this.getClass().getName(), item.toString());
+        showPhotoDetail(item);
     }
 
     @Override
@@ -169,6 +171,13 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
     private void showCameraList() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content, cameraListFragment, cameraListFragment.getTag());
+        ft.commit();
+    }
+
+    private void showPhotoDetail(PhotoItem item) {
+        PhotoDetail photoDetailFragment = PhotoDetail.newInstance(item);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction().addToBackStack(item.getTitle());
+        ft.replace(R.id.content, photoDetailFragment, photoDetailFragment.getTag());
         ft.commit();
     }
 

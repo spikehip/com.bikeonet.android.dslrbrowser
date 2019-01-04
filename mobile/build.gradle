@@ -17,8 +17,8 @@ android {
         applicationId "com.bikeonet.android.dslrbrowser"
         minSdkVersion 24
         targetSdkVersion 27
-        versionCode 12
-        versionName "1.0.2"
+        versionCode 13
+        versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -37,7 +37,7 @@ android {
     }
 
     lintOptions {
-        disable 'InvalidPackage','TrustAllX509TrustManager'
+        disable 'InvalidPackage', 'TrustAllX509TrustManager'
         abortOnError false
     }
 }
@@ -46,6 +46,7 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -62,4 +63,5 @@ dependencies {
     implementation group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '8.1.8.v20121106'
     implementation group: 'org.eclipse.jetty', name: 'jetty-client', version: '8.1.8.v20121106'
     testImplementation 'junit:junit:4.12'
+    implementation 'com.google.android.gms:play-services-maps:16.0.0'
 }

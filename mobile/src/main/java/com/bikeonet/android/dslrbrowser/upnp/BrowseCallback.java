@@ -101,6 +101,19 @@ public class BrowseCallback extends Browse {
                         }
                     }
 
+                    //select preview
+                    for (Res res : item.getResources()) {
+                        try {
+                            if (res.getProtocolInfo() != null && res.getProtocolInfo().getAdditionalInfo() != null && res.getProtocolInfo().getAdditionalInfo().toUpperCase().contains("JPEG_LRG") ) {
+                                photoItem.setPreviewResourceUrl(res.getValue());
+                                break;
+                            }
+                        } catch (NullPointerException e) {
+                            Log.e(TAG, "failed size for "+res.getValue());
+                        }
+                    }
+
+
                     photoItem.downloadThumbnail();
                     PhotoList.addItem(photoItem);
 

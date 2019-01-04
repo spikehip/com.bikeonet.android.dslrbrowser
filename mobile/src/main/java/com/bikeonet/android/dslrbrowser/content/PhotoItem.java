@@ -24,6 +24,7 @@ public class PhotoItem {
     private String resourceUrl;
     private String thumbnailResourceUrl;
     private boolean isSelected;
+    private String previewResourceUrl;
 
     public CameraItem getCameraItem() {
         return cameraItem;
@@ -83,7 +84,7 @@ public class PhotoItem {
             Log.d(this.getClass().getName(), "failed to load thumbnail from "+getThumbnailResourceUrl()+" error: "+e.getMessage());
         }
     }
-    private Bitmap createBitmapFromByteArray(byte[] icon) {
+    public static Bitmap createBitmapFromByteArray(byte[] icon) {
 
         if (icon != null && icon.length > 0) {
             Bitmap bMap = BitmapFactory.decodeByteArray(icon, 0, icon.length);
@@ -93,7 +94,7 @@ public class PhotoItem {
         return null;
     }
 
-    private byte[] downloadIconFromUrl(String url) throws IOException {
+    public static byte[] downloadIconFromUrl(String url) throws IOException {
         URL iconUrl = new URL(url);
         URLConnection ucon = iconUrl.openConnection();
         InputStream is = ucon.getInputStream();
@@ -231,4 +232,11 @@ public class PhotoItem {
         return toString().equals(that.toString());
     }
 
+    public void setPreviewResourceUrl(String previewResourceUrl) {
+        this.previewResourceUrl = previewResourceUrl;
+    }
+
+    public String getPreviewResourceUrl() {
+        return previewResourceUrl;
+    }
 }
