@@ -3,7 +3,7 @@ package com.bikeonet.android.dslrbrowser.upnp;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
 import com.bikeonet.android.dslrbrowser.content.CameraItem;
 import com.bikeonet.android.dslrbrowser.content.CameraList;

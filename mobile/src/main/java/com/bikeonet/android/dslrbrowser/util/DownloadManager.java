@@ -11,7 +11,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
-import android.support.media.ExifInterface;
+import androidx.exifinterface.media.ExifInterface;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
