@@ -19,4 +19,6 @@
     <string name="_10_153">10/153</string>
     <string name="title_selection_mode_on">selection mode on</string>
     <string name="sample_image_title">IMG_1234.JPG</string>
+    <string name="device_list_description">Device list</string>
+    <string name="photos_list_description">Photos list</string>
 </resources>

@@ -2,7 +2,7 @@ package com.bikeonet.android.dslrbrowser;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 
 /**

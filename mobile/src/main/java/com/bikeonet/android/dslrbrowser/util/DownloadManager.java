@@ -11,7 +11,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
-import android.support.media.ExifInterface;
+import androidx.exifinterface.media.ExifInterface;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -177,34 +177,10 @@ public class DownloadManager extends AsyncTask<PhotoItem, Long, String> {
                 }
 
                 fos.close();
-
-                String mediaFileName = absFilename;
-
-//                ExifInterface exifInterface = new ExifInterface(
-//                        absFilename);
-//                if (exifInterface.hasThumbnail()) {
-//                    String thumbFile = PATH + "/thumb_" + fileName;
-//                    FileOutputStream thumbOutputStream = new FileOutputStream(thumbFile);
-//                    thumbOutputStream.write(exifInterface.getThumbnail());
-//                    thumbOutputStream.close();
-//                    mediaFileName = thumbFile;
-//                }
-
-
                 Log.d("ImageManager",
                         "download ready in"
                                 + ((System.currentTimeMillis() - startTime) / 1000)
                                 + " sec");
-
-//                try {
-//                    MediaStore.Images.Media.insertImage(
-//                            context.getContentResolver(), mediaFileName,
-//                            fileName, "CANON");
-//                } catch (OutOfMemoryError e) {
-//                    //Toast.makeText(context, "Not enough memory to store media",
-//                    //		Toast.LENGTH_LONG).show();
-//                    Log.d("ImageManager", e.getMessage());
-//                }
 
             }
 
