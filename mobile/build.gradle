@@ -15,10 +15,10 @@ android {
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.bikeonet.android.dslrbrowser"
-        minSdkVersion 24
+        minSdkVersion 26
         targetSdkVersion 29
-        versionCode 14
-        versionName "1.0.4"
+        versionCode 15
+        versionName "1.0.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -59,8 +59,8 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'org.fourthline.cling:cling-core:2.1.2-SNAPSHOT'
     implementation 'org.fourthline.cling:cling-support:2.1.2-SNAPSHOT'
-    implementation group: 'org.eclipse.jetty', name: 'jetty-server', version: '10.0.0.alpha1'
-    implementation group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '10.0.0.alpha1'
-    implementation group: 'org.eclipse.jetty', name: 'jetty-client', version: '10.0.0.alpha1'
+    implementation group: 'org.eclipse.jetty', name: 'jetty-server', version: '8.2.0.v20160908'
+    implementation group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '8.2.0.v20160908'
+    implementation group: 'org.eclipse.jetty', name: 'jetty-client', version: '8.2.0.v20160908'
     testImplementation 'junit:junit:4.13'
 }
