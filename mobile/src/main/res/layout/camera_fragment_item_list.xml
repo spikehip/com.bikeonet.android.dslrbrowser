@@ -10,4 +10,5 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context="com.bikeonet.android.dslrbrowser.CameraItemFragment"
-    tools:listitem="@layout/camera_fragment_item" />
+    tools:listitem="@layout/camera_fragment_item"
+    android:contentDescription="@string/device_list_description"/>

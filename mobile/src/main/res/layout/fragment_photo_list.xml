@@ -9,5 +9,6 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context="com.example.andrasbekesi.dslrbrowser.com.bikeonet.android.dslrbrowser.PhotoListFragment"
-    tools:listitem="@layout/fragment_photo" />
+    tools:context="com.bikeonet.android.dslrbrowser.PhotoListFragment"
+    tools:listitem="@layout/fragment_photo"
+    android:contentDescription="@string/photos_list_description"/>
