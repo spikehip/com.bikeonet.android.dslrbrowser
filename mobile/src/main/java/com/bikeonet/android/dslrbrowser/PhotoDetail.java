@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -106,35 +107,15 @@ public class PhotoDetail extends Fragment {
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle(itemTitle);
-                builder.setMessage("Download this image directly into your device's downloads folder without injecting GPS coordinates?");
-                builder.setPositiveButton("Download", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(itemUrl))
-                                .setDescription(itemUrl)
-                                .setTitle(itemTitle)
-                                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
-                                .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE|DownloadManager.Request.NETWORK_WIFI)
-                                .setAllowedOverMetered(true)
-                                .setAllowedOverRoaming(true)
-                                .setVisibleInDownloadsUi(true);
-                        request.allowScanningByMediaScanner();
-                        DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-                        manager.enqueue(request);
-                        dialog.cancel();
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                AlertDialog alert = builder.create();
-                alert.show();
-
+                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(itemUrl))
+                        .setDescription(itemUrl)
+                        .setTitle(itemTitle)
+                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                        .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE|DownloadManager.Request.NETWORK_WIFI)
+                        .setAllowedOverMetered(true)
+                        .setAllowedOverRoaming(true);
+                DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                manager.enqueue(request);
             }
         });
 

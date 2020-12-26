@@ -1,7 +1,6 @@
 package com.bikeonet.android.dslrbrowser;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -9,17 +8,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
 import androidx.annotation.NonNull;
+
+import com.bikeonet.android.dslrbrowser.messaging.DownloadCompleteReceiver;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentTransaction;
@@ -39,17 +37,11 @@ import com.bikeonet.android.dslrbrowser.messaging.LocalBroadcastMessageBuilder;
 import com.bikeonet.android.dslrbrowser.messaging.NotificationBuilder;
 import com.bikeonet.android.dslrbrowser.upnp.BrowseManager;
 import com.bikeonet.android.dslrbrowser.upnp.ContentDirectoryRegistryListener;
-import com.bikeonet.android.dslrbrowser.util.DownloadManager;
 import com.bikeonet.android.dslrbrowser.util.LocationStore;
 
 import org.fourthline.cling.android.AndroidUpnpService;
 import org.fourthline.cling.android.AndroidUpnpServiceImpl;
 import org.fourthline.cling.registry.RegistryListener;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements CameraItemFragment.OnCameraListFragmentInteractionListener,
         PhotoListFragment.OnPhotoListFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener {
@@ -218,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
                 updateCameraListReceiver,
                 updateCameraListIntentFilter);
 
+        getApplicationContext().registerReceiver(new DownloadCompleteReceiver(), new IntentFilter(android.app.DownloadManager.ACTION_DOWNLOAD_COMPLETE));
     }
 
     @Override
@@ -230,17 +223,19 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
                 getIntent().getStringExtra("host") != null &&
                 !getIntent().getBooleanExtra("processed", false)) {
             String host = getIntent().getStringExtra("host");
-            if ( checkSDCardAvailable() ) {
-                File pdir = getExternalMediaDirs()[0];
-                File dcim = new File(pdir.getAbsolutePath() + "/"+getDownloadDirectory());
-                if ( createDir(dcim)) {
-                    DownloadManager dm = new DownloadManager(dcim.getAbsolutePath(), this);
 
-                    List<PhotoItem> filteredList = PhotoList.filterOnCameraHost(host);
-                    PhotoItem[] imageArray = filteredList.toArray(new PhotoItem[filteredList.size()]);
-                    dm.execute(imageArray);
-                }
-            }
+            PhotoList.filterOnCameraHost(host).forEach( photoItem -> {
+                android.app.DownloadManager.Request request = new android.app.DownloadManager.Request(Uri.parse(photoItem.getResourceUrl()))
+                        .setDescription(photoItem.getResourceUrl())
+                        .setTitle(photoItem.getTitle())
+                        .setNotificationVisibility(android.app.DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                        .setAllowedNetworkTypes(android.app.DownloadManager.Request.NETWORK_MOBILE| android.app.DownloadManager.Request.NETWORK_WIFI)
+                        .setAllowedOverMetered(true)
+                        .setAllowedOverRoaming(true);
+                android.app.DownloadManager manager = (android.app.DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                manager.enqueue(request);
+            });
+
             getIntent().putExtra("processed", true);
             notificationManager.cancelAll();
         }
@@ -299,22 +294,17 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
                 return true;
             case R.id.download_all:
                 Log.d(this.getClass().getName(), "Download all images option menu selected");
-                if ( checkSDCardAvailable() ) {
-                    File pdir = getExternalMediaDirs()[0];
-                    File dcim = new File(pdir.getAbsolutePath() + "/"+getDownloadDirectory());
-                    if ( createDir(dcim)) {
-                        DownloadManager dm = new DownloadManager(dcim.getAbsolutePath(), this);
-                        PhotoItem[] imageArray = PhotoList.getAllItems().toArray(new PhotoItem[PhotoList.getAllItems().size()]);
-                        Log.d(this.getClass().getName(), "Starting download of "+imageArray.length+" number of images...");
-                        dm.execute(imageArray);
-                    }
-                    else {
-                        showErrorDialog("Error", "Failed to create storage folder " + dcim, "Ok");
-                    }
-                }
-                else {
-                    showErrorDialog("Error", "Storage media not available", "Ok");
-                }
+                PhotoList.getAllItems().forEach(photoItem -> {
+                    android.app.DownloadManager.Request request = new android.app.DownloadManager.Request(Uri.parse(photoItem.getResourceUrl()))
+                            .setDescription(photoItem.getResourceUrl())
+                            .setTitle(photoItem.getTitle())
+                            .setNotificationVisibility(android.app.DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                            .setAllowedNetworkTypes(android.app.DownloadManager.Request.NETWORK_MOBILE| android.app.DownloadManager.Request.NETWORK_WIFI)
+                            .setAllowedOverMetered(true)
+                            .setAllowedOverRoaming(true);
+                    android.app.DownloadManager manager = (android.app.DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                    manager.enqueue(request);
+                });
                 return true;
             case R.id.selection_mode_on:
                 Log.d(this.getClass().getName(), "Entering selection mode");
@@ -346,51 +336,6 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
         });
         AlertDialog alert = builder.create();
         alert.show();
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    private String getDownloadDirectory() {
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(this);
-        boolean downloadToAlbum = prefs.getBoolean("download_to_album", false);
-
-        if (downloadToAlbum) {
-            Date today = new Date();
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            return format.format(today);
-        }
-        else {
-            return "";
-        }
-    }
-
-    private static boolean createDir(File dir) {
-        if ( dir.exists()) {
-            return true;
-        }
-
-        return dir.mkdirs();
-    }
-
-    private boolean checkSDCardAvailable() {
-        boolean mExternalStorageAvailable = false;
-        boolean mExternalStorageWriteable = false;
-        String state = Environment.getExternalStorageState();
-
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            // We can read and write the media
-            mExternalStorageAvailable = mExternalStorageWriteable = true;
-        } else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            // We can only read the media
-            mExternalStorageAvailable = true;
-            mExternalStorageWriteable = false;
-        } else {
-            // Something else is wrong. It may be one of many other states, but all we need
-            //  to know is we can neither read nor write
-            mExternalStorageAvailable = mExternalStorageWriteable = false;
-        }
-
-        return mExternalStorageAvailable && mExternalStorageWriteable;
     }
 
     private void doInitializeLocationManager() {

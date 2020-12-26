@@ -17,12 +17,11 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import com.bikeonet.android.dslrbrowser.content.PhotoItem;
 
-
+@Deprecated
 public class DownloadManager extends AsyncTask<PhotoItem, Long, String> {
 
     private final String PATH; // = "/data/data/com.bikeonet.android.sampleUpnpBrowser/";
     private final Context context;
-    private ProgressDialog progressDialog;
     private int count;
     private final boolean insertGPS;
     private final boolean downloadToAlbum;
@@ -40,14 +39,11 @@ public class DownloadManager extends AsyncTask<PhotoItem, Long, String> {
     @Override
     protected void onPreExecute() {
 
-        progressDialog = ProgressDialog.show(context, "Downloading image",
-                "Please wait...");
     }
 
     @Override
     protected String doInBackground(PhotoItem... params) {
         count = params.length;
-        progressDialog.setMax(100);
         String imageURL, fileName, mTempFilePath = null;
 
         for (int i = 0; i < params.length; i++) {
@@ -119,28 +115,10 @@ public class DownloadManager extends AsyncTask<PhotoItem, Long, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        progressDialog.dismiss();
-        if (result != null) {
-//            final Intent emailIntent = new Intent(
-//                    android.content.Intent.ACTION_SEND);
-//            emailIntent.setType("plain/text");
-//            emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL,
-//                    new String[] { email_to });
-//            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "");
-//            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "");
-//
-//            emailIntent.putExtra(Intent.EXTRA_STREAM,
-//                    Uri.parse("file://" + result));
-//
-//            context.startActivity(Intent.createChooser(emailIntent,
-//                    "Send mail..."));
-        }
     }
 
     @Override
     protected void onProgressUpdate(Long... values) {
-        progressDialog.setProgress(values[0].intValue());
-        progressDialog.setMessage("Done " + values[0].intValue() + "%");
     }
 
     public String DownloadFromUrl(String imageURL, String fileName) {
