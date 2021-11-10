@@ -58,13 +58,6 @@ public class MainActivity extends AppCompatActivity implements CameraItemFragmen
             LocationStore.getInstance().setLastLocation(location);
         }
 
-        @Override
-        public void onStatusChanged(String provider, int status,
-                                    Bundle extras) {
-            Log.i(this.getClass().getName(), provider + " status changed " + status);
-
-        }
-
         /**
          * 07-12 10:55:22.208: I/com.bikeonet.android.dslrbrowser.DslrBrowserApplication(1431): gps disabled
          * 07-12 10:55:33.349: I/com.bikeonet.android.dslrbrowser.DslrBrowserApplication(1431): gps enabled
